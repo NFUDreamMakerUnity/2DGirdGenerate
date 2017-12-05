@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\EnemyGenerate.cs" />
      <Compile Include="Assets\Script\GameFlow.cs" />
      <Compile Include="Assets\Script\GirdWallBuilder.cs" />
  <Reference Include="UnityEngine.UI">

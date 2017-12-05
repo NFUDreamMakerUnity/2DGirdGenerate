@@ -7,10 +7,11 @@ public class GirdWallBuilder : MonoBehaviour
 
     public static GirdWallBuilder instence;
     [SerializeField] int lineAmount;
-    [SerializeField] int WallLenth;
+    [SerializeField] int wallLenth;
     [SerializeField] GameObject gird;
     [SerializeField] Vector2 startPoint;
     [SerializeField] LayerMask layerMask;
+    [SerializeField] GameObject heighLight;
 
 
     void Awake()
@@ -27,12 +28,21 @@ public class GirdWallBuilder : MonoBehaviour
 
     public void BuildWall()
     {
+        RaycastHit2D hit2D = Physics2D.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition).origin, Camera.main.ScreenPointToRay(Input.mousePosition).direction, 1000, layerMask, 0);
+        /*HeightLight*/
+        if(hit2D)
+        {
+            heighLight.SetActive(true);
+            heighLight.transform.position = hit2D.transform.position;
+        }
+        else
+        {
+            heighLight.SetActive(false);
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit2D hit2D = Physics2D.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition).origin, Camera.main.ScreenPointToRay(Input.mousePosition).direction, 1000, layerMask, 0);
             if (hit2D)
             {
-                Debug.Log(hit2D.collider.gameObject.name);
                 foreach (var item in hit2D.collider.gameObject.GetComponentsInChildren<SpriteRenderer>())
                 {
                     item.enabled = true;
@@ -45,7 +55,7 @@ public class GirdWallBuilder : MonoBehaviour
     {
         for (int i = 0; i < lineAmount; i++)
         {
-            for (int j = 0; j < WallLenth; j++)
+            for (int j = 0; j < wallLenth; j++)
             {
                 GameObject clone = Instantiate(gird);
                 clone.transform.position = new Vector2(i, j) + startPoint;
